@@ -6,6 +6,7 @@ package org.hhplus.cleanarchitucture.lectures.model.entity;
 
 import java.util.Date;
 import org.hhplus.cleanarchitucture.lectures.model.domain.LectureDomain;
+import org.springframework.beans.BeanUtils;
 
 
 public record Lecture(
@@ -23,7 +24,9 @@ public record Lecture(
     }
 
     public LectureDomain toDomain(){
-        LectureDomain lectureDomain = new
+        LectureDomain lectureDomain = new LectureDomain();
+        BeanUtils.copyProperties(this, lectureDomain);
+        return lectureDomain;
     }
 
 }
