@@ -1,0 +1,29 @@
+/*
+entity
+*/
+
+package org.hhplus.cleanarchitucture.lectures.model.entity;
+
+import java.util.Date;
+import org.hhplus.cleanarchitucture.lectures.model.domain.LectureDomain;
+
+
+public record Lecture(
+        Long id, // 고유 번호
+        String lectureName, // 특강 이름
+        Date lectureOpenTime, // 특강
+        Long studentCount,
+        Long StudentLimit,
+        Date createDate
+
+) {
+
+    public static Lecture empty(Long id){
+        return new Lecture(id, null,null,null,null,null);
+    }
+
+    public LectureDomain toDomain(){
+        LectureDomain lectureDomain = new
+    }
+
+}

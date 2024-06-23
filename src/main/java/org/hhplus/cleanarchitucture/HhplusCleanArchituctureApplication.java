@@ -1,4 +1,4 @@
-package org.hhplus.hhplus_cleanarchitucture_java;
+package org.hhplus.hhplus_cleanarchitucture;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
