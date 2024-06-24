@@ -1,2 +1,12 @@
-package org.hhplus.cleanarchitucture.lectures.service.impl;public class LectureService {
+package org.hhplus.cleanarchitucture.lectures.service;
+
+import org.hhplus.cleanarchitucture.lectures.model.domain.LectureDomain;
+
+public interface LectureService {
+
+    LectureDomain apply(long userId);
+    boolean check(Long userId);
+
+
+
 }
