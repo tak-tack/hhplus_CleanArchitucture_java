@@ -1,25 +1,39 @@
 package org.hhplus.cleanarchitucture.lectures.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.hhplus.cleanarchitucture.lectures.model.domain.LectureDomain;
-import org.hhplus.cleanarchitucture.lectures.repository.LetureRepository;
+import org.hhplus.cleanarchitucture.lectures.model.domain.LectureApplicationDomain;
+import org.hhplus.cleanarchitucture.lectures.model.dto.LectureDto;
+import org.hhplus.cleanarchitucture.lectures.repository.LectureApplicationRepository;
 import org.hhplus.cleanarchitucture.lectures.service.LectureService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class LetureServiceImpl implements LectureService {
 
-    private final LetureRepository lectureRepository;
+    private static final Logger log = LoggerFactory.getLogger(LetureServiceImpl.class);
+    private final LectureApplicationRepository lectureApplicationRepository;
 
-    public LectureDomain apply(long userId){ // LIST dto 처리하기
+    @Override
+    @Transactional
+    public LectureDto apply(Long userId, Long lectureId){
+        log.info("specialLectureApp-service");
+            LectureApplicationDomain lectureApplicationDomain
+                    = lectureApplicationRepository.save(userId, lectureId);
+            return lectureApplicationDomain.toDTO(); // Domain > DTO
 
-        LectureDomain lectureDomain = new LectureDomain();
-        lectureRepository.save(userId);
-        return lectureDomain;
     }
-    public  boolean check(Long userId) { // dto 처리
-        return true;
+    public boolean check(Long userId) {
+        LectureApplicationDomain lectureApplicationDomain
+                = lectureApplicationRepository.selectByUserId(userId);
+        if (lectureApplicationDomain==null) {
+            return false;
+        }else{
+            return true;
+        }
 
     }
 

@@ -1,10 +1,10 @@
 package org.hhplus.cleanarchitucture.lectures.repository;
 
-import org.hhplus.cleanarchitucture.lectures.model.domain.LectureDomain;
+import org.hhplus.cleanarchitucture.lectures.model.domain.LectureApplicationDomain;
 
 public interface LectureApplicationRepository {
 
-     void selectByUserId(Long userId);
-     void save(Long userId);
+     LectureApplicationDomain selectByUserId(Long userId);
+     LectureApplicationDomain save(Long userId, Long lectureId);
 
 }
