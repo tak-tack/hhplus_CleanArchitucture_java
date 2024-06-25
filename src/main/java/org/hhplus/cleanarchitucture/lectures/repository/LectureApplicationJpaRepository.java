@@ -1,6 +1,7 @@
 package org.hhplus.cleanarchitucture.lectures.repository;
 
 
+import org.hhplus.cleanarchitucture.lectures.model.entity.LectureApplicationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -20,6 +21,6 @@ jpaRepository에 상속
 등록된다.
 - Spring 이 내부적으로 인터페이스 타입에 맞는 객체를 생성해서 bean으로 등록
  */
-public interface LectureJpaRepository {
+public interface LectureJpaRepository extends JpaRepository<LectureApplicationEntity> {
     //public List<LectureEntity>
 }
