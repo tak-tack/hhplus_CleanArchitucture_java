@@ -1,4 +1,4 @@
-package org.hhplus.hhplus_cleanarchitucture_java;
+package org.hhplus.cleanarchitucture;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

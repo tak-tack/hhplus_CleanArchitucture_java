@@ -1,13 +1,13 @@
-package org.hhplus.hhplus_cleanarchitucture_java;
+package org.hhplus.cleanarchitucture;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HhplusCleanArchituctureJavaApplication {
+public class HhplusCleanArchituctureApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(HhplusCleanArchituctureJavaApplication.class, args);
+        SpringApplication.run(HhplusCleanArchituctureApplication.class, args);
     }
 
 }
