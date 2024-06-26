@@ -31,10 +31,7 @@ class HhplusCleanArchituctureJavaApplicationTests {
             System.out.println("Date : " + saved.getLectureId());
             System.out.println("lectureId : "+  saved.getCreatedDate());
         }
-
-
     }
-
     @Test
     void select(){
         lectureApplicationJpaRepository.save(LectureApplicationEntity.builder().UserId(1L).lectureId(1L).build());
@@ -43,8 +40,5 @@ class HhplusCleanArchituctureJavaApplicationTests {
         System.out.println(lectureApplicationEntity.getUserId());
          System.out.println(lectureApplicationEntity.getLectureId());
         System.out.println(lectureApplicationEntity.getCreatedDate());
-
     }
-
-
 }

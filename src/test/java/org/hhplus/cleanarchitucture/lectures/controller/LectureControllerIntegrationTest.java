@@ -17,6 +17,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest   //통합테스트
@@ -35,21 +36,26 @@ class LectureControllerIntegrationTest {
 
     @BeforeEach
     void setUp(){
-
-        lectureService.apply(1L,1L); // 이 방법은 컨트롤러 테스트 위배됨!
+        // 저장
+        lectureService.apply(1L,1L);
         lectureService.apply(2L,1L);
+        for(long i =3; i < 35L; i++){// 선착순 테스트용
+            lectureService.apply(i,1L);
+        }
         //lectureService.apply(2L,1L); 성공했던 유저아이디로 특강 신청 불가!
 
     }
+    private final Long userId = 4L;
     @Test
     @DisplayName("apply")
     void specialLectureApp() throws Exception{
         //post
-        LectureDto lectureDto = new LectureDto(3,1); // setUp에서 저장했던 userId로 다시 하면 예외처리!
+        LectureDto lectureDto = new LectureDto(105,1); // setUp에서 저장했던 userId로 다시 하면 예외처리!
         mockMvc.perform(post("/lecture/apply").content(
                  jacksonObjectMapper.writeValueAsString(lectureDto))
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
+                //.andExpect(jsonPath("$.userId").value(5))
                 .andDo(print())
         ;
     }

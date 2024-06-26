@@ -23,17 +23,17 @@ public class LectureController {
     특강 신청 API
     - 특정 userId 로 선착순으로 제공되는 특강을 신청하는 API 를 작성합니다.
     - 동일한 신청자는 한 번의 수강 신청만 성공할 수 있습니다.
-    - 특강은 `4월 20일 토요일 1시` 에 열리며, 선착순 30명만 신청 가능합니다.
+    - 특강은  날짜별로 열린다. 선착순 30명만 신청 가능합니다.
     - 이미 신청자가 30명이 초과되면 이후 신청자는 요청을 실패합니다.
     - 어떤 유저가 특강을 신청했는지 히스토리를 저장해야한다.
     POST /lectures/apply
      */
     @PostMapping("/apply")
-    public void specialLectureApp(
+    public LectureDto specialLectureApp(
             @RequestBody LectureDto lectureDto
     ){
-        this.lectureService.apply(lectureDto.getUserId(), lectureDto.getLectureId());
         log.info("specialLectureApp-controller" +lectureDto.getUserId());
+        return  this.lectureService.apply(lectureDto.getUserId(), lectureDto.getLectureId());
     }
     /*
     특강 신청 완료 여부 조회 API

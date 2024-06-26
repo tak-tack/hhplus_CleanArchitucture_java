@@ -20,8 +20,9 @@ public class LectureApplicationRepositoryImpl implements LectureApplicationRepos
 
     public LectureApplicationDomain selectByUserId(Long userId){
         log.info("specialLectureApp-Repo selectByUserId START");
-       LectureApplicationEntity lectureApplicationEntity = lectureApplicationJpaRepository.findById(userId).orElse(null); // LectureApplicationEntity가 optional 객체라서 isPresent()사용가능
-        log.info("specialLectureApp-Repo selectByUserId END");
+        // 히스토리로 나누기. 지금 한테이블에 물려있음
+       LectureApplicationEntity lectureApplicationEntity = lectureApplicationJpaRepository.findById(userId).orElse(null); // LectureApplicationEntity가 optional 객체라서 isPresent()사용가능..
+        log.info("specialLectureApp-Repo selectByUserId END :");
         return Objects.isNull(lectureApplicationEntity) ? null : lectureApplicationEntity.toDomain();
     }
     @Override

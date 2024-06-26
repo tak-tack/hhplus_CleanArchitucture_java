@@ -2,6 +2,7 @@ package org.hhplus.cleanarchitucture.lectures.service.impl;
 
 import org.hhplus.cleanarchitucture.lectures.model.dto.LectureDto;
 import org.hhplus.cleanarchitucture.lectures.model.entity.LectureApplicationEntity;
+import org.hhplus.cleanarchitucture.lectures.repository.LectureApplicationJpaRepository;
 import org.hhplus.cleanarchitucture.lectures.repository.LectureApplicationRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +29,9 @@ class LetureServiceImplUnitTest {
    @Mock // 단위테스트를 위한 모킹 처리
     private LectureApplicationRepository lectureApplicationRepository;
 
+   @Mock
+   private LectureApplicationJpaRepository lectureApplicationJpaRepository;
+
     @InjectMocks
     private LetureServiceImpl lectureService;
 
@@ -46,7 +50,7 @@ class LetureServiceImplUnitTest {
     void setUp(){
         lectureApplicationRepository.save(1L,1L);
         lectureApplicationRepository.save(2L,1L);
-        lectureApplicationRepository.save(2L,2L);
+        //lectureApplicationRepository.save(2L,2L);
 
     }
 
@@ -59,7 +63,6 @@ class LetureServiceImplUnitTest {
         //when
         Long getId = lectureService.apply(userId,studentId).getUserId(); // setUp에서 저장했던 userId로 다시 하면 예외처리!
         //then
-        //Assertions.assertEquals(1L, getId);
         Assertions.assertEquals(lectureApplicationEntity.toDomain().getUserId(), getId); // DTO == Domain  생성 객체 비교
         // createDate,StudentId 는 Repository 에서 생성 되므로 단위 테스트단계에서는 확인 불가?
         System.out.println(lectureService.apply(userId,studentId).toString());

@@ -1,7 +1,13 @@
 package org.hhplus.cleanarchitucture.lectures.repository;
 
+import jakarta.persistence.LockModeType;
 import org.hhplus.cleanarchitucture.lectures.model.entity.LectureApplicationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.Optional;
 
 //JPA Repository
 //Spring Data JPA는 JPA의 구현체인 Hibernate를 이용하기 위한 여러 API를 제공한다
@@ -14,4 +20,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 //- Spring 이 내부적으로 인터페이스 타입에 맞는 객체를 생성해서 bean으로 등록
 public interface LectureApplicationJpaRepository extends JpaRepository<LectureApplicationEntity, Long> {
 
+    @Lock(LockModeType.PESSIMISTIC_WRITE) // 비관적락
+    @Query("select count(*) from LectureApplicationEntity l where l.lectureId = :lectureId")
+    Optional<Long> findSumStudentId(@Param("lectureId") Long lectureId
+                                    );
 }
