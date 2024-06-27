@@ -4,6 +4,7 @@ Dto
 package org.hhplus.cleanarchitucture.lectures.model.dto;
 
 import lombok.*;
+import org.hhplus.cleanarchitucture.lectures.tool.StudentStatus;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,6 +19,8 @@ import java.time.format.DateTimeFormatter;
 public class LectureDto {
     long userId; // 고유 번호 userId
     long lectureId;
+    boolean userIdCheck;
+    StudentStatus studentStatus;
     //long studentId;
 //    String lectureName; // 특강 이름
 //    @DateTimeFormat(pattern = "MM월 dd일 E요일 HH시")

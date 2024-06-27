@@ -3,6 +3,7 @@ package org.hhplus.cleanarchitucture.lectures.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hhplus.cleanarchitucture.lectures.model.dto.LectureDto;
 import org.hhplus.cleanarchitucture.lectures.service.LectureService;
+import org.hhplus.cleanarchitucture.lectures.tool.StudentStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -50,7 +51,7 @@ class LectureControllerIntegrationTest {
     @DisplayName("apply")
     void specialLectureApp() throws Exception{
         //post
-        LectureDto lectureDto = new LectureDto(105,1); // setUp에서 저장했던 userId로 다시 하면 예외처리!
+        LectureDto lectureDto = new LectureDto(105,1,true, StudentStatus.SUCCESS); // setUp에서 저장했던 userId로 다시 하면 예외처리!
         mockMvc.perform(post("/lecture/apply").content(
                  jacksonObjectMapper.writeValueAsString(lectureDto))
                 .contentType(APPLICATION_JSON))

@@ -5,7 +5,10 @@ import org.hhplus.cleanarchitucture.lectures.model.domain.LectureApplicationDoma
 import org.hhplus.cleanarchitucture.lectures.model.dto.LectureDto;
 import org.hhplus.cleanarchitucture.lectures.repository.LectureApplicationJpaRepository;
 import org.hhplus.cleanarchitucture.lectures.repository.LectureApplicationRepository;
+import org.hhplus.cleanarchitucture.lectures.repository.LectureHistoryJpaRepository;
+import org.hhplus.cleanarchitucture.lectures.repository.LectureHistoryRepository;
 import org.hhplus.cleanarchitucture.lectures.service.LectureService;
+import org.hhplus.cleanarchitucture.lectures.tool.StudentStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,8 @@ public class LetureServiceImpl implements LectureService {
     private static final Logger log = LoggerFactory.getLogger(LetureServiceImpl.class);
     private final LectureApplicationRepository lectureApplicationRepository;
     private final LectureApplicationJpaRepository lectureApplicationJpaRepository;
+    private final LectureHistoryRepository lectureHistoryRepository;
+    private final LectureHistoryJpaRepository lectureHistoryJpaRepository;
 
     @Override
     @Transactional
@@ -26,9 +31,11 @@ public class LetureServiceImpl implements LectureService {
                 lectureApplicationJpaRepository.findSumStudentId(lectureId).orElseThrow(NullPointerException::new); // 예외발생// 선착순
         if (currentStudentCount > 30L) {
             log.info("specialLectureApp-service currentStudentcount over :  " + currentStudentCount);
+            register(userId,lectureId,StudentStatus.FAIL);
             throw new RuntimeException();
         }
         log.info("specialLectureApp-service currentStudentcount now :  " + currentStudentCount);
+        register(userId,lectureId,StudentStatus.SUCCESS);
 
         LectureApplicationDomain lectureApplicationDomain
                 = lectureApplicationRepository.save(userId, lectureId);
@@ -38,7 +45,7 @@ public class LetureServiceImpl implements LectureService {
 
     @Override
     @Transactional
-    public boolean check(Long userId) { // boolean타입 dto로 바꾸기,
+    public boolean check(Long userId) { // boolean타입 dto로 바꾸기?
         LectureApplicationDomain lectureApplicationDomain
                 = lectureApplicationRepository.selectByUserId(userId);
         if (lectureApplicationDomain == null) {
@@ -46,6 +53,12 @@ public class LetureServiceImpl implements LectureService {
         } else {
             return true;
         }
+
+    }
+
+    @Transactional
+    public void register(Long userId, Long lectureId, StudentStatus studentStatus){
+       lectureHistoryRepository.save(userId,lectureId,studentStatus).toDTO();
 
     }
 }
