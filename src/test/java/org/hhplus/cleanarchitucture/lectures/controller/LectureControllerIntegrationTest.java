@@ -40,9 +40,9 @@ class LectureControllerIntegrationTest {
         // 저장
         lectureService.apply(1L,1L);
         lectureService.apply(2L,1L);
-        for(long i =3; i < 35L; i++){// 선착순 테스트용
-            lectureService.apply(i,1L);
-        }
+//        for(long i =3; i < 35L; i++){// 선착순 테스트용
+//            lectureService.apply(i,1L);
+//        }
         //lectureService.apply(2L,1L); 성공했던 유저아이디로 특강 신청 불가!
 
     }

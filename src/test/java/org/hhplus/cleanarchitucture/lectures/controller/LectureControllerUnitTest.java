@@ -3,6 +3,7 @@ package org.hhplus.cleanarchitucture.lectures.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hhplus.cleanarchitucture.lectures.model.dto.LectureDto;
 import org.hhplus.cleanarchitucture.lectures.service.LectureService;
+import org.hhplus.cleanarchitucture.lectures.tool.StudentStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,7 +39,7 @@ class LectureControllerUnitTest {
     @Test
     @DisplayName("특강 신청 API")
     void specialLectureApp() throws Exception {
-        LectureDto lectureDto = new LectureDto(0,0);
+        LectureDto lectureDto = new LectureDto(105,1,true, StudentStatus.SUCCESS);
         ObjectMapper objectMapper = new ObjectMapper();
         //post
         mockMvc.perform(post("/lecture/apply").content(

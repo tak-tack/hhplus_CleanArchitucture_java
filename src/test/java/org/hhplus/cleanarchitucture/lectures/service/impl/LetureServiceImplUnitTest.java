@@ -4,6 +4,7 @@ import org.hhplus.cleanarchitucture.lectures.model.dto.LectureDto;
 import org.hhplus.cleanarchitucture.lectures.model.entity.LectureApplicationEntity;
 import org.hhplus.cleanarchitucture.lectures.repository.LectureApplicationJpaRepository;
 import org.hhplus.cleanarchitucture.lectures.repository.LectureApplicationRepository;
+import org.hhplus.cleanarchitucture.lectures.tool.StudentStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -40,7 +41,7 @@ class LetureServiceImplUnitTest {
     private final Long userId = 4L;
     private final Long studentId = 1L; // null 미허용 , auto increment 처리
     // DTO 객체 생성
-    final LectureDto lectureDto = new LectureDto(2,1L);
+    final LectureDto lectureDto = new LectureDto(105,1,true, StudentStatus.SUCCESS);
     // 서비스 단위테스트 반환 타입 domain (반환 시 entity.toDomain) domain 클래스 불필요
     final LectureApplicationEntity lectureApplicationEntity =
             new LectureApplicationEntity(studentId,userId,1L,now);
@@ -76,7 +77,7 @@ class LetureServiceImplUnitTest {
                 .willReturn(lectureApplicationEntity.toDomain());
         //when
         //then
-        Assertions.assertTrue(lectureService.check(2L)); // 조회하여 존재할경우 true 존재하지않으면 false
+        Assertions.assertTrue(lectureService.check(2L).getStudentStatus().equals(StudentStatus.SUCCESS)); // 조회하여 존재할경우 true 존재하지않으면 false
 
     }
 }

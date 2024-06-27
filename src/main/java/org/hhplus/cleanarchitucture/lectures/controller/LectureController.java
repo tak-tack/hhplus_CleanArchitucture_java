@@ -42,7 +42,7 @@ public class LectureController {
     GET /lectures/{userId}/application/
      */
     @GetMapping("{userId}/application")
-    public boolean specialLectureCheck(@PathVariable(name="userId") Long userId){
+    public LectureDto specialLectureCheck(@PathVariable(name="userId") Long userId){
         return lectureService.check(userId);
     }
 

@@ -2,6 +2,7 @@ package org.hhplus.cleanarchitucture.lectures.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.hhplus.cleanarchitucture.lectures.model.domain.LectureApplicationDomain;
+import org.hhplus.cleanarchitucture.lectures.model.domain.LectureHistoryDomain;
 import org.hhplus.cleanarchitucture.lectures.model.dto.LectureDto;
 import org.hhplus.cleanarchitucture.lectures.repository.LectureApplicationJpaRepository;
 import org.hhplus.cleanarchitucture.lectures.repository.LectureApplicationRepository;
@@ -45,14 +46,19 @@ public class LetureServiceImpl implements LectureService {
 
     @Override
     @Transactional
-    public boolean check(Long userId) { // boolean타입 dto로 바꾸기?
-        LectureApplicationDomain lectureApplicationDomain
-                = lectureApplicationRepository.selectByUserId(userId);
-        if (lectureApplicationDomain == null) {
-            return false;
-        } else {
-            return true;
-        }
+    public LectureDto check(Long userId) { // boolean타입 dto로 바꾸기?
+
+            return lectureHistoryRepository.selectByParams(userId).toDTO();
+
+
+
+//        LectureApplicationDomain lectureApplicationDomain 이전 체크는 application에서체크함
+//                = lectureApplicationRepository.selectByUserId(userId);
+//        if (lectureApplicationDomain == null) {
+//            return false;
+//        } else {
+//            return true;
+//        }
 
     }
 
