@@ -1,8 +1,11 @@
 package org.hhplus.cleanarchitucture.lectures.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.hhplus.cleanarchitucture.lectures.model.command.LectureApplicationCommand;
 import org.hhplus.cleanarchitucture.lectures.model.dto.LectureDto;
 import org.hhplus.cleanarchitucture.lectures.service.LectureService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor // 생성자를 받겠다고 선언했는데 생성자에서 받을때 service 이 필요함
 public class LectureController {
 
+    private static final Logger log = LoggerFactory.getLogger(LectureController.class);
     private final LectureService lectureService;
     /*
     - 정확하게 30명의 사용자에게만 특강을 제공할 방법을 고민해 봅니다.
@@ -17,32 +21,29 @@ public class LectureController {
      */
     /*
     특강 신청 API
-    - TODO -
     - 특정 userId 로 선착순으로 제공되는 특강을 신청하는 API 를 작성합니다.
     - 동일한 신청자는 한 번의 수강 신청만 성공할 수 있습니다.
-    - 특강은 `4월 20일 토요일 1시` 에 열리며, 선착순 30명만 신청 가능합니다.
+    - 특강은  날짜별로 열린다. 선착순 30명만 신청 가능합니다.
     - 이미 신청자가 30명이 초과되면 이후 신청자는 요청을 실패합니다.
     - 어떤 유저가 특강을 신청했는지 히스토리를 저장해야한다.
     POST /lectures/apply
      */
-    //private LectureDto lectureDto =new LectureDto();
     @PostMapping("/apply")
-    public void specialLectureApp(/*@RequestBody LectureDto dto*/){ // 넌 void 타입이여 반환할 필요없으니 (요구사항에 userId 반환x) 근데 파람값도 필요없니?
-        //LectureDto lectureDto = new LectureDto();
-        //return lectureDto;
-
+    public LectureDto specialLectureApp(
+            @RequestBody LectureDto lectureDto
+    ){
+        log.info("specialLectureApp-controller" +lectureDto.getUserId());
+        return  this.lectureService.apply(lectureDto.getUserId(), lectureDto.getLectureId());
     }
-
     /*
     특강 신청 완료 여부 조회 API
     - 특정 userId 로 특강 신청 완료 여부를 조회하는 API 를 작성합니다.
     - 특강 신청에 성공한 사용자는 성공했음을, 특강 등록자 명단에 없는 사용자는 실패했음을 반환합니다. (true, false)
     GET /lectures/{userId}/application/
      */
-    @GetMapping("{id}/application")
-    public boolean specialLectureCheck(@PathVariable Long id){
-        return lectureService.check(id);
-
+    @GetMapping("{userId}/application")
+    public LectureDto specialLectureCheck(@PathVariable(name="userId") Long userId){
+        return lectureService.check(userId);
     }
 
     /*
